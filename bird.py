@@ -9,7 +9,7 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0) # Meter / Minute
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0) # Meter / Second
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per second
 
-TIME_PER_ACTION = 60.0
+TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 5
 
@@ -22,12 +22,14 @@ class Bird:
         self.dir = 0
 
     def do(self):
-        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time + 1) % 5
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
         if self.frame > 4:
             self.frame_height -= 168
+            self.frame = 0
 
         if self.frame_height == 0 and self.frame > 3:
             self.frame_height = 336
+            self.frame = 0
 
     def draw(self):
         if self.dir == 0:
