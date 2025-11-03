@@ -2,7 +2,6 @@ from pico2d import load_image, get_time, load_font
 
 import game_world
 import game_framework
-from state_machine import StateMachine
 
 PIXEL_PER_METER = (10.0 / 0.5)  # 10 pixel 30 cm
 RUN_SPEED_KMPH = 30.0  # Km / Hour
@@ -21,5 +20,11 @@ class Bird:
         self.frame = 0
         self.dir = 0
 
+    def do(self):
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+
     def draw(self):
+        pass
+
+    def update(self):
         pass
