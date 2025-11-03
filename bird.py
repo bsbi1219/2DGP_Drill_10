@@ -3,7 +3,7 @@ from pico2d import load_image, get_time, load_font
 import game_world
 import game_framework
 
-PIXEL_PER_METER = (10.0 / 0.5)  # 10 pixel 30 cm
+PIXEL_PER_METER = (10.0 / 0.5)  # 10 pixel 50 cm
 RUN_SPEED_KMPH = 30.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0) # Meter / Minute
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0) # Meter / Second
