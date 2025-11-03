@@ -33,8 +33,12 @@ def init():
     boy = Boy()
     game_world.add_object(boy, 1)
 
-    bird = Bird()
-    game_world.add_object(bird, 1)
+    pos = [(800, 450), (700, 500), (650, 430), (720, 480), (600, 450), (750, 420), (900, 470), (850, 430), (950, 500), (780, 440)]
+
+    for p in pos:
+        bird = Bird()
+        bird.x, bird.y = p
+        game_world.add_object(bird, 1)
 
 def update():
     game_world.update()
