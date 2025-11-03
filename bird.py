@@ -9,7 +9,7 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0) # Meter / Minute
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0) # Meter / Second
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per second
 
-TIME_PER_ACTION = 0.5
+TIME_PER_ACTION = 60.0
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 5
 
@@ -22,19 +22,25 @@ class Bird:
         self.dir = 0
 
     def do(self):
-        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time + 1) % 5
+        if self.frame > 4:
+            self.frame_height -= 168
+
+        if self.frame_height == 0 and self.frame > 3:
+            self.frame_height = 336
 
     def draw(self):
         if self.dir == 0:
-            self.image.clip_draw(int(self.frame) * 183, 0, 183, 168, self.x, self.y, 70, 60)
+            self.image.clip_draw(int(self.frame) * 183, self.frame_height, 183, 168, self.x, self.y, 70, 60)
         else:
-            self.image.clip_composite_draw(int(self.frame) * 183, 0, 183, 168, 0, 'h', self.x, self.y, 70, 60)
+            self.image.clip_composite_draw(int(self.frame) * 183, self.frame_height, 183, 168, 0, 'h', self.x, self.y, 70, 60)
 
     def update(self):
         if self.dir == 0:
             self.x += RUN_SPEED_PPS * game_framework.frame_time
         else:
             self.x -= RUN_SPEED_PPS * game_framework.frame_time
+
         if self.x > 1600 - 50:
             self.dir = 1
         elif self.x < 50:
